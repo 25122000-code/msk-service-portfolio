@@ -15,6 +15,11 @@
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 16px; }
   video { width: 100%; border-radius: 10px; background: #000; display: block; }
   footer { text-align: center; color: #666; padding: 30px; font-size: 0.85rem; }
+  .cta { text-align: center; margin: 0 0 40px; }
+  .cta a.button { display: inline-block; background: #d4a747; color: #1a1608; font-weight: 700; text-decoration: none; padding: 12px 26px; border-radius: 8px; margin: 6px; }
+  .cta p { color: #aaa; font-size: 0.9rem; margin-top: 10px; }
+  .cta a.mail { color: #d4a747; }
+  #showreel h2 { color: #d4a747; }
 </style>
 </head>
 <body>
@@ -23,7 +28,21 @@
   <p>Advertising videos — sample work</p>
 </header>
 
+<div class="cta">
+  <a class="button" href="https://claude.ai/artifact/MLyV3B5vSDoGoFp3sFpnSU" target="_blank" rel="noopener">Start your video brief</a>
+  <p>Or write to us directly: <a class="mail" href="mailto:mskservice430@gmail.com">mskservice430@gmail.com</a></p>
+</div>
+
 <main>
+
+<section id="showreel">
+  <h2>Showreel — all our work in 20 seconds</h2>
+  <div class="grid">
+    <video controls autoplay muted loop playsinline preload="metadata">
+      <source src="showreel.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
 
 <section id="luxe">
   <h2>Jewelry &amp; Leather Goods</h2>
@@ -84,7 +103,7 @@
 
 </main>
 
-<footer>MSK Service — sample video content<br>Contact: <a href="mailto:m.bussiness0001@gmail.com" style="color:#aaa">m.bussiness0001@gmail.com</a></footer>
+<footer>MSK Service — sample video content<br>Contact: <a href="mailto:mskservice430@gmail.com" style="color:#aaa">mskservice430@gmail.com</a></footer>
 <script data-goatcounter="https://mskservice.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
 </body>

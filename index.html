@@ -20,6 +20,11 @@
   .cta p { color: #aaa; font-size: 0.9rem; margin-top: 10px; }
   .cta a.mail { color: #d4a747; }
   #showreel h2 { color: #d4a747; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 16px; }
+  .grid3 .card { scroll-margin-top: 20px; }
+  .grid3 .card h3 { font-size: 1rem; margin: 0 0 8px; color: #ccc; font-weight: 600; }
+  @media (max-width: 900px) { .grid3 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .grid3 { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -44,62 +49,56 @@
   </div>
 </section>
 
-<section id="luxe">
-  <h2>Jewelry &amp; Leather Goods</h2>
-  <div class="grid">
+<div class="grid3">
+
+  <div id="luxe" class="card">
+    <h3>Jewelry &amp; Leather Goods</h3>
     <video controls playsinline preload="metadata">
       <source src="eclat-luxe.mp4" type="video/mp4">
     </video>
   </div>
-</section>
 
-<section id="maison">
-  <h2>Home &amp; Décor</h2>
-  <div class="grid">
+  <div id="maison" class="card">
+    <h3>Home &amp; Décor</h3>
     <video controls playsinline preload="metadata">
       <source src="foyer-maison.mp4" type="video/mp4">
     </video>
   </div>
-</section>
 
-<section id="gourmandise">
-  <h2>Food &amp; Artisan Craft</h2>
-  <div class="grid">
+  <div id="gourmandise" class="card">
+    <h3>Food &amp; Artisan Craft</h3>
     <video controls playsinline preload="metadata">
       <source src="recolte-gourmandise.mp4" type="video/mp4">
     </video>
-    <video controls playsinline preload="metadata">
-      <source src="recolte-cafe-chocolat.mp4" type="video/mp4">
-    </video>
   </div>
-</section>
 
-<section id="bienetre">
-  <h2>Natural Wellness &amp; Skincare</h2>
-  <div class="grid">
+  <div id="bienetre" class="card">
+    <h3>Natural Wellness &amp; Skincare</h3>
     <video controls playsinline preload="metadata">
       <source src="eclore-bienetre.mp4" type="video/mp4">
     </video>
   </div>
-</section>
 
-<section id="enfance">
-  <h2>Children &amp; Wooden Toys</h2>
-  <div class="grid">
+  <div id="enfance" class="card">
+    <h3>Children &amp; Wooden Toys</h3>
     <video controls playsinline preload="metadata">
       <source src="petitspas-enfance.mp4" type="video/mp4">
     </video>
   </div>
-</section>
 
-<section id="services">
-  <h2>Services &amp; Technology</h2>
-  <div class="grid">
+  <div id="services" class="card">
+    <h3>Services &amp; Technology</h3>
     <video controls playsinline preload="metadata">
       <source src="all-services.mp4" type="video/mp4">
     </video>
   </div>
-</section>
+
+</div>
+
+<div class="cta">
+  <a class="button" href="https://claude.ai/artifact/MLyV3B5vSDoGoFp3sFpnSU" target="_blank" rel="noopener">Start your video brief</a>
+  <p>Or write to us directly: <a class="mail" href="mailto:mskservice430@gmail.com">mskservice430@gmail.com</a></p>
+</div>
 
 </main>
 

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brief Vidéo MSK</title>
+<style>
+  :root{
+    --bg:#0d0d0c;
+    --panel:#161410;
+    --panel-2:#1d1a14;
+    --text:#f3efe4;
+    --muted:#a89f8c;
+    --accent:#d4a747;
+    --accent-soft:rgba(212,167,71,.14);
+    --border:#2b2620;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    padding:0 16px;
+    padding-block:48px 80px;
+  }
+  h1,h2{font-family:'Fraunces',Georgia,serif;}
+  .wrap{max-width:640px;margin:0 auto;}
+  .langbar{display:flex;justify-content:center;gap:6px;margin-bottom:22px;}
+  .langbar button{
+    background:var(--panel-2);border:1px solid var(--border);color:var(--muted);
+    border-radius:20px;padding:6px 14px;font-size:.78rem;font-weight:600;
+    cursor:pointer;font-family:inherit;letter-spacing:.03em;
+  }
+  .langbar button.active{background:var(--accent-soft);color:var(--accent);border-color:var(--accent);}
+  header{text-align:center;margin-bottom:40px;}
+  header .eyebrow{
+    color:var(--accent);letter-spacing:.14em;text-transform:uppercase;
+    font-size:.72rem;font-weight:600;margin-bottom:10px;
+  }
+  header h1{font-size:2rem;margin:0 0 10px;text-wrap:balance;}
+  header p{color:var(--muted);font-size:.95rem;line-height:1.5;margin:0;}
+  .card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:26px 22px;
+    margin-bottom:18px;
+  }
+  .card .num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;border-radius:50%;
+    background:var(--accent-soft);color:var(--accent);
+    font-size:.75rem;font-weight:700;margin-right:10px;
+  }
+  .card h2{font-size:1.05rem;margin:0 0 4px;display:flex;align-items:center;}
+  .card .hint{color:var(--muted);font-size:.82rem;margin:0 0 16px 36px;line-height:1.4;}
+  label{display:block;font-size:.85rem;color:var(--muted);margin:14px 0 6px;}
+  label:first-of-type{margin-top:0;}
+  input[type=text],input[type=email],input[type=tel],textarea,select{
+    width:100%;background:var(--panel-2);border:1px solid var(--border);
+    border-radius:8px;color:var(--text);padding:10px 12px;font-size:.92rem;
+    font-family:inherit;
+  }
+  textarea{min-height:70px;resize:vertical;}
+  input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+  .choices label{
+    margin:0;display:flex;align-items:center;gap:6px;
+    background:var(--panel-2);border:1px solid var(--border);
+    border-radius:20px;padding:7px 13px;font-size:.85rem;color:var(--text);
+    cursor:pointer;width:auto;
+  }
+  .choices input{width:auto;accent-color:var(--accent);}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media (max-width:480px){.row2{grid-template-columns:1fr;}}
+  .submit-bar{position:sticky;bottom:0;padding-top:14px;}
+  button.submit{
+    width:100%;background:var(--accent);color:#1a1608;border:none;
+    border-radius:10px;padding:15px;font-size:1rem;font-weight:700;
+    cursor:pointer;font-family:inherit;
+  }
+  button.submit:disabled{opacity:.6;cursor:default;}
+  .note{color:var(--muted);font-size:.78rem;text-align:center;margin-top:10px;line-height:1.5;}
+  .err{color:#e08a8a;font-size:.8rem;margin-top:6px;display:none;}
+  [hidden]{display:none!important;}
+  .done{text-align:center;padding:60px 20px;}
+  .done .mark{
+    width:52px;height:52px;border-radius:50%;background:var(--accent-soft);
+    color:var(--accent);display:flex;align-items:center;justify-content:center;
+    margin:0 auto 18px;font-size:1.4rem;
+  }
+  .done h1{font-size:1.5rem;margin:0 0 10px;}
+  .done p{color:var(--muted);line-height:1.6;max-width:420px;margin:0 auto;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="langbar" id="langbar">
+    <button type="button" data-lang="fr">FR</button>
+    <button type="button" data-lang="en">EN</button>
+    <button type="button" data-lang="es">ES</button>
+  </div>
+
+  <header>
+    <div class="eyebrow">MSK Service</div>
+    <h1 data-i18n="title"></h1>
+    <p data-i18n="subtitle"></p>
+  </header>
+
+  <form id="form">
+
+    <div class="card">
+      <h2><span class="num">1</span><span data-i18n="s1_h"></span></h2>
+      <p class="hint" data-i18n="s1_hint"></p>
+      <label data-i18n="l_company"></label>
+      <input type="text" name="company" id="company" required>
+      <div class="row2">
+        <div>
+          <label data-i18n="l_industry"></label>
+          <input type="text" name="industry" id="industry" data-i18n-ph="ph_industry">
+        </div>
+        <div>
+          <label data-i18n="l_location"></label>
+          <input type="text" name="location" id="location">
+        </div>
+      </div>
+      <label data-i18n="l_website"></label>
+      <input type="text" name="website" id="website" placeholder="https://">
+      <label data-i18n="l_socials"></label>
+      <input type="text" name="socials" id="socials" data-i18n-ph="ph_socials">
+    </div>
+
+    <div class="card">
+      <h2><span class="num">2</span><span data-i18n="s2_h"></span></h2>
+      <p class="hint" data-i18n="s2_hint"></p>
+      <label data-i18n="l_product"></label>
+      <textarea name="product" id="product" required></textarea>
+      <label data-i18n="l_difference"></label>
+      <textarea name="difference" id="difference"></textarea>
+      <label data-i18n="l_pricerange"></label>
+      <select name="priceRange" id="pricerange">
+        <option value="" data-i18n="opt_select"></option>
+        <option value="affordable" data-i18n="price_1"></option>
+        <option value="mid-range" data-i18n="price_2"></option>
+        <option value="premium" data-i18n="price_3"></option>
+        <option value="luxury" data-i18n="price_4"></option>
+      </select>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">3</span><span data-i18n="s3_h"></span></h2>
+      <p class="hint" data-i18n="s3_hint"></p>
+      <label data-i18n="l_audience"></label>
+      <textarea name="audience" id="audience"></textarea>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">4</span><span data-i18n="s4_h"></span></h2>
+      <div class="choices" id="goals">
+        <label><input type="checkbox" name="goals" value="Brand awareness"><span data-i18n="goal_1"></span></label>
+        <label><input type="checkbox" name="goals" value="Direct sales / conversion"><span data-i18n="goal_2"></span></label>
+        <label><input type="checkbox" name="goals" value="Social media (Reels, TikTok, Shorts)"><span data-i18n="goal_3"></span></label>
+        <label><input type="checkbox" name="goals" value="Website / product page"><span data-i18n="goal_4"></span></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">5</span><span data-i18n="s5_h"></span></h2>
+      <div class="choices" id="moods">
+        <label><input type="checkbox" name="moods" value="Luxury / minimal"><span data-i18n="mood_1"></span></label>
+        <label><input type="checkbox" name="moods" value="Warm / family"><span data-i18n="mood_2"></span></label>
+        <label><input type="checkbox" name="moods" value="Dynamic / young"><span data-i18n="mood_3"></span></label>
+        <label><input type="checkbox" name="moods" value="Minimalist"><span data-i18n="mood_4"></span></label>
+      </div>
+      <label data-i18n="l_inspirations"></label>
+      <textarea name="inspirations" id="inspirations"></textarea>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">6</span><span data-i18n="s6_h"></span></h2>
+      <div class="row2">
+        <div>
+          <label data-i18n="l_format"></label>
+          <select name="format" id="format">
+            <option value="" data-i18n="opt_select"></option>
+            <option value="16:9" data-i18n="format_1"></option>
+            <option value="9:16" data-i18n="format_2"></option>
+            <option value="both" data-i18n="format_3"></option>
+          </select>
+        </div>
+        <div>
+          <label data-i18n="l_duration"></label>
+          <select name="duration" id="duration">
+            <option value="" data-i18n="opt_select"></option>
+            <option value="10s" data-i18n="dur_1"></option>
+            <option value="15s" data-i18n="dur_2"></option>
+            <option value="30s" data-i18n="dur_3"></option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">7</span><span data-i18n="s7_h"></span></h2>
+      <p class="hint" data-i18n="s7_hint"></p>
+      <label data-i18n="l_photolink"></label>
+      <input type="text" name="photoLink" id="photolink" placeholder="https://">
+      <div class="note" style="margin-top:8px;text-align:left;" data-i18n="note_photo"></div>
+      <label data-i18n="l_brandkit"></label>
+      <select name="brandKit" id="brandkit">
+        <option value="" data-i18n="opt_select"></option>
+        <option value="yes" data-i18n="yn_yes"></option>
+        <option value="no" data-i18n="yn_no"></option>
+        <option value="partial" data-i18n="brandkit_partial"></option>
+      </select>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">8</span><span data-i18n="s8_h"></span></h2>
+      <label data-i18n="l_human"></label>
+      <select name="human" id="human">
+        <option value="" data-i18n="opt_select"></option>
+        <option value="yes" data-i18n="yn_yes"></option>
+        <option value="no" data-i18n="yn_no"></option>
+        <option value="unsure" data-i18n="human_unsure"></option>
+      </select>
+      <label data-i18n="l_humandetails"></label>
+      <input type="text" name="humanDetails" id="humandetails">
+    </div>
+
+    <div class="card">
+      <h2><span class="num">9</span><span data-i18n="s9_h"></span></h2>
+      <div class="row2">
+        <div>
+          <label data-i18n="l_music"></label>
+          <select name="music" id="music">
+            <option value="" data-i18n="opt_select"></option>
+            <option value="emotional" data-i18n="music_1"></option>
+            <option value="upbeat" data-i18n="music_2"></option>
+            <option value="neutral" data-i18n="music_3"></option>
+          </select>
+        </div>
+        <div>
+          <label data-i18n="l_voiceover"></label>
+          <select name="voiceover" id="voiceover">
+            <option value="" data-i18n="opt_select"></option>
+            <option value="yes" data-i18n="yn_yes"></option>
+            <option value="no" data-i18n="yn_no"></option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">10</span><span data-i18n="s10_h"></span></h2>
+      <label data-i18n="l_constraints"></label>
+      <textarea name="constraints" id="constraints"></textarea>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">11</span><span data-i18n="s11_h"></span></h2>
+      <div class="row2">
+        <div>
+          <label data-i18n="l_deadline"></label>
+          <input type="text" name="deadline" id="deadline" data-i18n-ph="ph_deadline">
+        </div>
+        <div>
+          <label data-i18n="l_budget"></label>
+          <input type="text" name="budget" id="budget">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">12</span><span data-i18n="s12_h"></span></h2>
+      <label data-i18n="l_email"></label>
+      <input type="email" name="email" id="email" required>
+      <label data-i18n="l_phone"></label>
+      <input type="tel" name="phone" id="phone">
+      <label data-i18n="l_availability"></label>
+      <input type="text" name="availability" id="availability">
+    </div>
+
+    <div class="submit-bar">
+      <button type="submit" class="submit" id="submitBtn" data-i18n="btn_submit"></button>
+      <div class="err" id="err" data-i18n="err_required"></div>
+      <div class="note" data-i18n="note_bottom"></div>
+    </div>
+
+  </form>
+
+  <div class="done" id="done" hidden>
+    <div class="mark">✓</div>
+    <h1 data-i18n="done_h"></h1>
+    <p data-i18n="done_p"></p>
+  </div>
+
+</div>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600;700&display=swap">
+<script>
+(function(){
+  var DICT = {
+    fr: {
+      title:"Brief pour votre vidéo",
+      subtitle:"Répondez à ces quelques questions pour qu'on prépare une vidéo publicitaire sur mesure pour votre marque. 5 minutes suffisent.",
+      s1_h:"Votre entreprise", s1_hint:"Pour qu'on comprenne votre univers de marque.",
+      l_company:"Nom de l'entreprise *", l_industry:"Secteur d'activité", ph_industry:"ex : bijouterie, cosmétique...",
+      l_location:"Ville / pays", l_website:"Site web", l_socials:"Réseaux sociaux", ph_socials:"Instagram, TikTok...",
+      s2_h:"Le produit à mettre en avant", s2_hint:"Ce qu'on va montrer dans la vidéo.",
+      l_product:"Description du produit / service *", l_difference:"Ce qui le rend différent de la concurrence",
+      l_pricerange:"Gamme de prix", opt_select:"Sélectionner...",
+      price_1:"Accessible", price_2:"Milieu de gamme", price_3:"Haut de gamme", price_4:"Luxe",
+      s3_h:"Votre public cible", s3_hint:"Qui achète chez vous, et où on peut le toucher.",
+      l_audience:"Profil de vos clients (âge, zone géographique...)",
+      s4_h:"Objectif de la vidéo",
+      goal_1:"Notoriété / image de marque", goal_2:"Vente directe / conversion",
+      goal_3:"Réseaux sociaux", goal_4:"Site web / fiche produit",
+      s5_h:"Ambiance et style",
+      mood_1:"Luxe / épuré", mood_2:"Chaleureux / familial", mood_3:"Dynamique / jeune", mood_4:"Minimaliste",
+      l_inspirations:"Des vidéos ou marques qui vous inspirent ? (liens bienvenus)",
+      s6_h:"Format et durée", l_format:"Format",
+      format_1:"16:9 (site web)", format_2:"9:16 (réseaux sociaux)", format_3:"Les deux",
+      l_duration:"Durée souhaitée", dur_1:"10 secondes", dur_2:"15 secondes", dur_3:"30 secondes",
+      s7_h:"Vos photos produit", s7_hint:"On anime vos vraies photos — plus elles sont nettes et bien éclairées, meilleur sera le rendu.",
+      l_photolink:"Lien vers vos photos (Google Drive, Dropbox, WeTransfer...)",
+      note_photo:"Pas de lien sous la main ? Répondez simplement à notre email de confirmation avec 2-3 photos en pièce jointe.",
+      l_brandkit:"Logo et charte graphique (couleurs, typographie) disponibles ?",
+      yn_yes:"Oui", yn_no:"Non", brandkit_partial:"Partiellement",
+      s8_h:"Présence humaine", l_human:"Souhaitez-vous qu'une personne apparaisse dans la vidéo ?",
+      human_unsure:"Je ne sais pas, à vous de conseiller",
+      l_humandetails:"Précisions si oui (mains, silhouette, visage...)",
+      s9_h:"Musique et ton", l_music:"Musique",
+      music_1:"Émotionnelle", music_2:"Dynamique", music_3:"Neutre",
+      l_voiceover:"Voix off",
+      s10_h:"Contraintes", l_constraints:"Éléments à éviter absolument",
+      s11_h:"Délai et budget", l_deadline:"Délai souhaité", ph_deadline:"ex : sous 1 semaine", l_budget:"Budget indicatif",
+      s12_h:"Contact", l_email:"Email *", l_phone:"Téléphone / WhatsApp", l_availability:"Disponibilité pour un échange rapide",
+      btn_submit:"Envoyer mon brief",
+      err_required:"Merci de renseigner au moins le nom de l'entreprise, le produit et votre email.",
+      note_bottom:"Vos informations servent uniquement à préparer votre vidéo. Réponse sous 24–48h.",
+      done_h:"Brief bien reçu",
+      done_p:"Merci ! On revient vers vous sous 24–48h avec une proposition adaptée à votre marque. Si vous avez un lien vers vos photos à ajouter, répondez simplement à notre email de confirmation."
+    },
+    en: {
+      title:"Video Brief",
+      subtitle:"Answer a few questions so we can prepare a custom advertising video for your brand. Takes about 5 minutes.",
+      s1_h:"Your business", s1_hint:"So we understand your brand's world.",
+      l_company:"Company name *", l_industry:"Industry", ph_industry:"e.g. jewellery, skincare...",
+      l_location:"City / country", l_website:"Website", l_socials:"Social media", ph_socials:"Instagram, TikTok...",
+      s2_h:"The product to showcase", s2_hint:"What we'll show in the video.",
+      l_product:"Product / service description *", l_difference:"What makes it different from competitors",
+      l_pricerange:"Price range", opt_select:"Select...",
+      price_1:"Affordable", price_2:"Mid-range", price_3:"Premium", price_4:"Luxury",
+      s3_h:"Your target audience", s3_hint:"Who buys from you, and where we can reach them.",
+      l_audience:"Customer profile (age, location...)",
+      s4_h:"Video goal",
+      goal_1:"Brand awareness", goal_2:"Direct sales / conversion",
+      goal_3:"Social media", goal_4:"Website / product page",
+      s5_h:"Mood and style",
+      mood_1:"Luxury / minimal", mood_2:"Warm / family", mood_3:"Dynamic / young", mood_4:"Minimalist",
+      l_inspirations:"Any videos or brands that inspire you? (links welcome)",
+      s6_h:"Format and duration", l_format:"Format",
+      format_1:"16:9 (website)", format_2:"9:16 (social media)", format_3:"Both",
+      l_duration:"Desired duration", dur_1:"10 seconds", dur_2:"15 seconds", dur_3:"30 seconds",
+      s7_h:"Your product photos", s7_hint:"We animate your real photos — the clearer and better lit, the better the result.",
+      l_photolink:"Link to your photos (Google Drive, Dropbox, WeTransfer...)",
+      note_photo:"No link handy? Just reply to our confirmation email with 2-3 photos attached.",
+      l_brandkit:"Logo and brand guidelines (colors, typography) available?",
+      yn_yes:"Yes", yn_no:"No", brandkit_partial:"Partially",
+      s8_h:"Human presence", l_human:"Would you like a person to appear in the video?",
+      human_unsure:"Not sure, your call",
+      l_humandetails:"Details if yes (hands, silhouette, face...)",
+      s9_h:"Music and tone", l_music:"Music",
+      music_1:"Emotional", music_2:"Upbeat", music_3:"Neutral",
+      l_voiceover:"Voiceover",
+      s10_h:"Constraints", l_constraints:"Anything to absolutely avoid",
+      s11_h:"Timeline and budget", l_deadline:"Desired timeline", ph_deadline:"e.g. within 1 week", l_budget:"Approximate budget",
+      s12_h:"Contact", l_email:"Email *", l_phone:"Phone / WhatsApp", l_availability:"Availability for a quick call",
+      btn_submit:"Send my brief",
+      err_required:"Please fill in at least the company name, product and your email.",
+      note_bottom:"Your information is only used to prepare your video. We'll reply within 24–48h.",
+      done_h:"Brief received",
+      done_p:"Thank you! We'll get back to you within 24–48h with a proposal tailored to your brand. If you have a photo link to add, just reply to our confirmation email."
+    },
+    es: {
+      title:"Brief para tu vídeo",
+      subtitle:"Responde estas preguntas para que preparemos un vídeo publicitario a medida para tu marca. Solo 5 minutos.",
+      s1_h:"Tu empresa", s1_hint:"Para entender el universo de tu marca.",
+      l_company:"Nombre de la empresa *", l_industry:"Sector", ph_industry:"ej: joyería, cosmética...",
+      l_location:"Ciudad / país", l_website:"Sitio web", l_socials:"Redes sociales", ph_socials:"Instagram, TikTok...",
+      s2_h:"El producto a destacar", s2_hint:"Lo que mostraremos en el vídeo.",
+      l_product:"Descripción del producto / servicio *", l_difference:"Qué lo diferencia de la competencia",
+      l_pricerange:"Rango de precio", opt_select:"Selecciona...",
+      price_1:"Económico", price_2:"Gama media", price_3:"Alta gama", price_4:"Lujo",
+      s3_h:"Tu público objetivo", s3_hint:"Quién te compra y dónde podemos llegar a ellos.",
+      l_audience:"Perfil de tus clientes (edad, ubicación...)",
+      s4_h:"Objetivo del vídeo",
+      goal_1:"Notoriedad de marca", goal_2:"Venta directa / conversión",
+      goal_3:"Redes sociales", goal_4:"Sitio web / ficha de producto",
+      s5_h:"Ambiente y estilo",
+      mood_1:"Lujo / minimalista", mood_2:"Cálido / familiar", mood_3:"Dinámico / joven", mood_4:"Minimalista",
+      l_inspirations:"¿Vídeos o marcas que te inspiren? (enlaces bienvenidos)",
+      s6_h:"Formato y duración", l_format:"Formato",
+      format_1:"16:9 (sitio web)", format_2:"9:16 (redes sociales)", format_3:"Ambos",
+      l_duration:"Duración deseada", dur_1:"10 segundos", dur_2:"15 segundos", dur_3:"30 segundos",
+      s7_h:"Fotos de tu producto", s7_hint:"Animamos tus fotos reales: cuanto más nítidas y bien iluminadas, mejor será el resultado.",
+      l_photolink:"Enlace a tus fotos (Google Drive, Dropbox, WeTransfer...)",
+      note_photo:"¿No tienes un enlace a mano? Responde a nuestro email de confirmación con 2-3 fotos adjuntas.",
+      l_brandkit:"¿Tienes logo y manual de marca (colores, tipografía)?",
+      yn_yes:"Sí", yn_no:"No", brandkit_partial:"Parcialmente",
+      s8_h:"Presencia humana", l_human:"¿Quieres que aparezca una persona en el vídeo?",
+      human_unsure:"No lo sé, tú decides",
+      l_humandetails:"Detalles si es sí (manos, silueta, rostro...)",
+      s9_h:"Música y tono", l_music:"Música",
+      music_1:"Emocional", music_2:"Dinámica", music_3:"Neutra",
+      l_voiceover:"Voz en off",
+      s10_h:"Restricciones", l_constraints:"Elementos que evitar por completo",
+      s11_h:"Plazo y presupuesto", l_deadline:"Plazo deseado", ph_deadline:"ej: en 1 semana", l_budget:"Presupuesto aproximado",
+      s12_h:"Contacto", l_email:"Email *", l_phone:"Teléfono / WhatsApp", l_availability:"Disponibilidad para una llamada rápida",
+      btn_submit:"Enviar mi brief",
+      err_required:"Por favor completa al menos el nombre de la empresa, el producto y tu email.",
+      note_bottom:"Tu información solo se usa para preparar tu vídeo. Respuesta en 24–48h.",
+      done_h:"Brief recibido",
+      done_p:"¡Gracias! Te responderemos en 24–48h con una propuesta adaptada a tu marca. Si tienes un enlace a tus fotos, respóndenos al email de confirmación."
+    }
+  };
+
+  var currentLang = 'fr';
+
+  function applyLanguage(lang){
+    if(!DICT[lang]) lang = 'fr';
+    currentLang = lang;
+    var dict = DICT[lang];
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      if(dict[key] !== undefined) el.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(function(el){
+      var key = el.getAttribute('data-i18n-ph');
+      if(dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
+    });
+    document.querySelectorAll('#langbar button').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+  }
+
+  document.querySelectorAll('#langbar button').forEach(function(b){
+    b.addEventListener('click', function(){ applyLanguage(b.getAttribute('data-lang')); });
+  });
+
+  var initial = 'fr';
+  try{
+    var nav = (navigator.language || 'fr').slice(0,2).toLowerCase();
+    if(nav === 'en' || nav === 'es') initial = nav;
+  }catch(ex){}
+  applyLanguage(initial);
+
+  function checkedValues(containerId){
+    var els = document.querySelectorAll('#'+containerId+' input[type=checkbox]:checked');
+    return Array.prototype.map.call(els, function(e){return e.value;}).join(', ');
+  }
+
+  async function submit(e){
+    e.preventDefault();
+    var company = document.getElementById('company').value.trim();
+    var product = document.getElementById('product').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var err = document.getElementById('err');
+    if(!company || !product || !email){
+      err.style.display = 'block';
+      return;
+    }
+    err.style.display = 'none';
+
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+
+    var data = {
+      _subject: 'Nouveau brief client — ' + company,
+      _template: 'table',
+      _captcha: 'false',
+      formLanguage: currentLang,
+      company: company,
+      industry: document.getElementById('industry').value.trim(),
+      location: document.getElementById('location').value.trim(),
+      website: document.getElementById('website').value.trim(),
+      socials: document.getElementById('socials').value.trim(),
+      product: product,
+      difference: document.getElementById('difference').value.trim(),
+      priceRange: document.getElementById('pricerange').value,
+      audience: document.getElementById('audience').value.trim(),
+      goals: checkedValues('goals'),
+      moods: checkedValues('moods'),
+      inspirations: document.getElementById('inspirations').value.trim(),
+      format: document.getElementById('format').value,
+      duration: document.getElementById('duration').value,
+      photoLink: document.getElementById('photolink').value.trim(),
+      brandKit: document.getElementById('brandkit').value,
+      human: document.getElementById('human').value,
+      humanDetails: document.getElementById('humandetails').value.trim(),
+      music: document.getElementById('music').value,
+      voiceover: document.getElementById('voiceover').value,
+      constraints: document.getElementById('constraints').value.trim(),
+      deadline: document.getElementById('deadline').value.trim(),
+      budget: document.getElementById('budget').value.trim(),
+      email: email,
+      phone: document.getElementById('phone').value.trim(),
+      availability: document.getElementById('availability').value.trim()
+    };
+
+    try{
+      await fetch('https://formsubmit.co/ajax/mskservice430@gmail.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      });
+    }catch(ex){
+      // best-effort; still show confirmation so the client isn't blocked
+    }
+
+    document.getElementById('form').hidden = true;
+    document.getElementById('done').hidden = false;
+  }
+
+  document.getElementById('form').addEventListener('submit', submit);
+})();
+</script>
+</body>
+</html>
